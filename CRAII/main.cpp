@@ -12,7 +12,7 @@
 
   Fill out the Connection class so that this is handled
   in the constructor and destructor. The constructor should
-  take (and store) the ip address.
+  take (and store) the ip address (as a std::string)
 */
 
 #include <iostream>
@@ -32,6 +32,7 @@ void disconnect(std::string ip_address)
 
 class Connection
 {
+
 };
 
 
