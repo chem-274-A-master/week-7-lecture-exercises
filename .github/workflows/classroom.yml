@@ -1,0 +1,41 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: CRAII
+      id: craii
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: CRAII
+        command: cd CRAII && bash run_test.sh
+        timeout: 20
+        max-score: 1
+
+    - name: CSmartPointer
+      id: csmartpointer
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: CSmartPointer
+        command: cd CSmartPointer && bash run_test.sh
+        timeout: 20
+        max-score: 1
+
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CRAII_RESULTS: "${{steps.craii.outputs.result}}"
+        CSMARTPOINTER_RESULTS: "${{steps.csmartpointer.outputs.result}}"
+      with:
+        runners: craii,csmartpointer
