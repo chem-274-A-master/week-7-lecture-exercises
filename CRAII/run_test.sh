@@ -2,7 +2,7 @@
 
 set -eux
 
-g++ -Wall -pedantic main.cpp -I. -o main
+g++ -std=c++17 -Wall -pedantic main.cpp -I. -o main
 ./main 2>&1 > output
 
 grep -xq "Connecting to ip address: 12\.34\.56\.78" output
